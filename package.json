@@ -1,10 +1,16 @@
 {
-  "dependencies": {
-    "apollo-server-express": "^3.6.3",
-    "bcrypt": "^5.0.1",
-    "express": "^4.17.3",
-    "graphql": "^16.3.0",
-    "jsonwebtoken": "^8.5.1",
-    "mongoose": "^6.2.5"
-  }
+  "name": "tech-friends",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server/server.js",
+  "scripts": {
+    "start": "node server/server.js",
+    "install": "cd server && npm i && cd ../client && npm i",
+    "seed": "cd server && npm run seed",
+    "build": "cd client && npm run build"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
 }
+
