@@ -5,7 +5,7 @@ const typeDefs = gql`
     username: String
     email: String
     password: String
-    savedRecipes: [recipeSchema]!
+    savedRecipes: [Recipe]!
   }
 
   type Recipe {
