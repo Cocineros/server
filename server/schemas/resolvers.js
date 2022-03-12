@@ -36,39 +36,32 @@ const resolvers = {
         return { token, profile };
       },
       addRecipe: async (parent,  args , context) => {
+        console.log(context)
         if (context.profile) {
-          const recipe = await Recipe.create({
-            args,
-          });
-  
           await Profile.findOneAndUpdate(
             { _id: context.profile._id },
-            { $addToSet: { savedRecipes: recipe._id } },
+            { $addToSet: { savedRecipes: args } },
             {
                 new: true
             }
           );
   
-          return recipe;
+          return args;
         }
         throw new AuthenticationError('You need to be logged in!');
       },
 
-      removeRecipe: async (parent, { recipeId }, context) => {
+      removeRecipe: async (parent, args, context) => {
         if (context.profile) {
-          const profile = await Profile.findOneAndDelete({
-            _id: recipeId,
-          });
-  
           await Profile.findOneAndUpdate(
             { _id: context.profile._id },
-            { $pull: { savedRecipes: recipe._id } },
+            { $pull: { savedRecipes: args } },
             {
                 new: true
             }
           );
   
-          return profile;
+          return args;
         }
         throw new AuthenticationError('You need to be logged in!');
       },
