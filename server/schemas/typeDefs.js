@@ -5,7 +5,7 @@ const typeDefs = gql`
     username: String
     email: String
     password: String
-    savedRecipes: [recipeSchema]!
+    savedRecipes: [Recipe]!
   }
 
   type Recipe {
@@ -29,7 +29,7 @@ const typeDefs = gql`
     addProfile(username: String!, email: String!, password: String!): Auth
     login(email: String!, password: String!): Auth
     addRecipe(name: String!,description: String!, ingredients: String!, instructions: String!): Recipe
-    removeRecipe(recipeId: ID!): Recipe
+    removeRecipe(_id: String!): Recipe
   }
 `;
 
