@@ -1,5 +1,6 @@
 const { AuthenticationError } = require('apollo-server-express');
 const { Profile, Recipe } = require('../models');
+const recipeSchema = require('../models/Recipe');
 const { signToken } = require('../utils/auth');
 
 const resolvers = {
@@ -13,8 +14,8 @@ const resolvers = {
     },
   
     Mutation: {
-      addProfile: async (parent, { username, email, password }) => {
-        const profile = await Profile.create({ username, email, password });
+      addProfile: async (parent, { firstName, lastName, username, email, password }) => {
+        const profile = await Profile.create({ firstName, lastName, username, email, password });
         const token = signToken(profile);
         return { token, profile };
       },
@@ -65,6 +66,20 @@ const resolvers = {
         }
         throw new AuthenticationError('You need to be logged in!');
       },
+
+      editRecipe: async (parent, args, context) => {
+        if (context.profile) {
+          await Recipe.findOneAndUpdate(
+            { _id: savedRecipes._id},
+            { $set: args },
+            {
+              new: true
+            }
+          );
+
+          return args
+        }
+      }
 
     },
   };
