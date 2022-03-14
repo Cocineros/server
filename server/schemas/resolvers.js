@@ -68,10 +68,15 @@ const resolvers = {
       },
 
       editRecipe: async (parent, args, context) => {
+        console.log("args", args)
         if (context.profile) {
-          await Recipe.findOneAndUpdate(
-            { _id: savedRecipes._id},
-            { $set: args },
+          const currentProfile = await Profile.findOne({ _id: context.profile._id })
+          console.log("current profile", currentProfile)
+          const mutatedProfile = {...currentProfile.savedRecipes, ...args}
+          await Profile.findOneAndUpdate(
+            // { _id: savedRecipes._id}
+            { _id: context.profile._id},
+            { $set: {  savedRecipes:  mutatedProfile} },
             {
               new: true
             }
